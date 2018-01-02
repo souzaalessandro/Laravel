@@ -1,5 +1,7 @@
 <?php namespace estoque\Http\Controllers;
+
 use Illuminate\Support\Facades\DB;
+use Request;
 
 
 class ProdutoController extends Controller
@@ -8,16 +10,27 @@ class ProdutoController extends Controller
 	public function lista()
 	{
 		$produtos=DB::connection('sqlsrv')->select('select * from dbo.products');
-		$html = '<h1> Chamou Lista produtos agora sim X </h1>';
-		$html .= '<ul>';
 
-		foreach ($produtos as $produto ) {
-			# code...
-			$html .= "<li> product code :". $produto->ProductID . ' | Product Name : ' . $produto->ProductName . '</li>';
-		}
 
-		$html .= '</ul>';
-
-		return $html;
+		return view('produto.listagem')->with('produtos',$produtos);
 	}
+
+	public function mostra()
+    {
+        $id = Request::route('id','0');
+        $produto=DB::connection('sqlsrv')->select('select produto.QuantityPerUnit, 
+                                                          produto.ProductName, 
+                                                          categoria.CategoryName, 
+                                                          categoria.Description 
+                                                     from dbo.products produto, 
+                                                          dbo.Categories categoria 
+                                                    where produto.CategoryID = categoria.CategoryID 
+                                                      and productID= ? 
+                                                      order by 3 ',[$id]);
+
+        if (empty($produto))
+            return "Esse produto não existe";
+
+        return view('produto.detalhes')->with('p',$produto[0]);
+    }
 }

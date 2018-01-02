@@ -164,6 +164,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Bestmomo\Scafold\ScafoldServiceProvider::class,
+        Khill\FontAwesome\Laravel\FontAwesomeServiceProvider::class,
+
 
         /*
          * Package Service Providers...
@@ -176,9 +178,7 @@ return [
         estoque\Providers\AuthServiceProvider::class,
         // estoque\Providers\BroadcastServiceProvider::class,
         estoque\Providers\EventServiceProvider::class,
-        estoque\Providers\RouteServiceProvider::class,
-
-    ],
+        estoque\Providers\RouteServiceProvider::class, ],
 
     /*
     |--------------------------------------------------------------------------
