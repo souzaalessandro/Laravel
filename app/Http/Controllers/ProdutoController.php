@@ -1,6 +1,7 @@
 <?php namespace estoque\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Request;
 
 
@@ -32,5 +33,20 @@ class ProdutoController extends Controller
             return "Esse produto não existe";
 
         return view('produto.detalhes')->with('p',$produto[0]);
+    }
+
+    public function novo()
+    {
+        return view('produto.novoproduto');
+    }
+
+    public function adiciona()
+    {
+        $name =Request::input('productName');
+        $unitPrice = Request::input('unitPrice');
+        $unitInStock = Request::input('unitInStock');
+
+        return implode(',',array($name,$unitPrice,$unitInStock));
+
     }
 }
